@@ -50,7 +50,7 @@ class Parser:
 
     def get_objects_from_config(self, config_file, save_to_file=False, out_file=False):
         config = self.read_asa_config(config_file)
-        object_list = re.findall(r'object .*\n .*\n', config)
+        object_list = re.findall(r'object (?:network|service).*\n .*\n', config)
         obj_list_in_json = []
         for obj in object_list:
             obj = obj.split("\n")
@@ -71,7 +71,7 @@ class Parser:
 
     def get_object_groups_from_config(self, config_file, save_to_file=False, out_file=False):
         config = self.read_asa_config(config_file)
-        object_group_list = re.findall(r'(object-group.*\n( .+\n)+)', config)
+        object_group_list = re.findall(r'object-group.*\n( .+\n)+', config)
 
         group_list_in_json = []
         for groups in object_group_list:
@@ -95,4 +95,3 @@ class Parser:
             return
 
         return {"group_list":group_list_in_json}
-
