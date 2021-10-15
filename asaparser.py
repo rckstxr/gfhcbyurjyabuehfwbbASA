@@ -10,6 +10,7 @@ class Parser:
     def read_asa_config(self, config_file):
         f = open(config_file, "r")
         config = f.read()
+        print(config)
         f.close()
 
         return config
@@ -17,11 +18,12 @@ class Parser:
 
     def get_acl_rules_from_config(self, config_file, save_to_file=False, out_file=False):
         config = self.read_asa_config(config_file)
-        acl_rules_list = re.findall(r'access-list .* extended .*\n', config)
+        regexp = re.compile('access-list .* extended .*\n')
+        acl_rules_list = regexp.findall(config)
         acl_rules_in_json = []
         for acl in acl_rules_list:
             acl = acl.split("\n")
-            print(acl)
+#            print(acl)
             json_acl = {}
             json_acl.update({"ACL_name":acl[0].split(" ")[1]})
             json_acl.update({"ACL_action":acl[0].split(" ")[3]})
@@ -35,22 +37,11 @@ class Parser:
 
         return {"acl_rules_list":acl_rules_in_json}
 
-#        if save_to_file:
-#            acl_rules_list_file = open(out_file, "w")
-#            for rule in acl_rules_list:
-#                acl_rules_list_file.write(rule);
-#            acl_rules_list_file.close()
-#            return
-#        else:
-#            rule_list = []
-#            for rule in acl_rules_list:
-#                rule_list.append(rule)
-#            return rule_list
-
 
     def get_objects_from_config(self, config_file, save_to_file=False, out_file=False):
         config = self.read_asa_config(config_file)
-        object_list = re.findall(r'object (?:network|service).*\n .*\n', config)
+        regexp = re.compile('object (?:network|service).*\n .*\n')
+        object_list = regexp.findall(config)
         obj_list_in_json = []
         for obj in object_list:
             obj = obj.split("\n")
@@ -71,12 +62,10 @@ class Parser:
 
     def get_object_groups_from_config(self, config_file, save_to_file=False, out_file=False):
         config = self.read_asa_config(config_file)
-        object_group_list = re.findall(r'object-group.*\n( .+\n)+', config)
-
+        regexp = re.compile('object-group.*\n(?: .+\n)+')
+        object_group_list = regexp.findall(config)
         group_list_in_json = []
-        for groups in object_group_list:
-            print(groups)
-            group = groups[0]
+        for group in object_group_list:
             print(group)
             json_group = {}
             group = group.split("\n")
