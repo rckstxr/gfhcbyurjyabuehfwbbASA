@@ -1,5 +1,6 @@
 import re
 import json
+import ipaddress
 
 class Parser:
 
@@ -10,7 +11,7 @@ class Parser:
     def read_asa_config(self, config_file):
         f = open(config_file, "r")
         config = f.read()
-        print(config)
+#        print(config)
         f.close()
 
         return config
@@ -50,7 +51,18 @@ class Parser:
             json_obj.update({"object_name":obj[0].split(" ")[2]})
             json_obj.update({"object_rule":obj[1]})
             obj_list_in_json.append(json_obj)
-
+            if obj[1].split(" ")[1] == "host":
+                json_obj.update({"object_rule_type":"host"})
+                json_obj.update({"object_rule_target":obj[1].split(" ")[-1]})
+            if obj[1].split(" ")[1] == "service":
+                json_obj.update({"object_rule_type":"service"})
+                json_obj.update({"object_rule_service_type": obj[1].split(" ")[2]})
+                json_obj.update({"object_rule_target":obj[1].split(" ")[-2]})
+            if obj[1].split(" ")[1] == "range":
+                json_obj.update({"object_rule_type": "range"})
+                json_obj.update({"object_rule_target1":obj[1].split(" ")[2]})
+                json_obj.update({"object_rule_target2":obj[1].split(" ")[3]})
+                #need to modify range and write hosts to json separately
 
         if save_to_file:
             with open(out_file, "w") as f:
@@ -66,7 +78,7 @@ class Parser:
         object_group_list = regexp.findall(config)
         group_list_in_json = []
         for group in object_group_list:
-            print(group)
+#            print(group)
             json_group = {}
             group = group.split("\n")
             json_group.update({"group_type":group[0].split(" ")[1]})
