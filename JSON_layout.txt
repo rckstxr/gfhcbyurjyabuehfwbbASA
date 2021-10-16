@@ -4,8 +4,7 @@
     "Serial_number":"",
     "ASA version":"",
     "Hostname":"",
-    "Interfaces":
-    [
+    "Interfaces": [
         {
         "Interface_name":"",
         "Interface_description":"",
@@ -17,10 +16,8 @@
         "Interface_security_level":""
         }
     ],
-    "Objects":
-    [
-        "Object_type":
-        [
+    "Objects": [
+        "Object_type": [
             {
             "type":"network",
             "type":"service"
@@ -29,19 +26,16 @@
         "Object_name":"",
         "Object_rule":
          {
-            "Object_rule_type":
-            [
+            "Object_rule_type": [
                 {
                 "type":"host",
                 "type":"service",
                 "type":"range"
                 }
             ],
-            "Object_rule_value":
-            [
+            "Object_rule_value": [
                 {
-                "ip":"",
-                [
+                "ip":"", [
                 "range_ip_1":"",
                 "range_ip_2":""
                 ],
@@ -52,11 +46,9 @@
          }
 
     ],
-    "Object_groups":
-    [
+    "Object_groups": [
         {
-        "Object_group_type":
-        [
+        "Object_group_type": [
             {
             "network",
             "service",
@@ -66,8 +58,7 @@
         "Object_group_name":"",
         "Object_group_rule":
             {
-            "Object_group_rule_type":
-            [
+            "Object_group_rule_type": [
                 {
                 "network-object",
                 "service-object",
@@ -75,8 +66,7 @@
                 "group-object"
                 }
             ],
-            "Object_group_rule_value":
-            [
+            "Object_group_rule_value": [
                 {
                 "Object_group_rule_value_type":"host",
                 "Object_group_rule_value_type":"subnet",
@@ -97,12 +87,10 @@
             }
         }
     ],
-    "ACL":
-    [
+    "ACL": [
         {
         "ACL_name":"", # Возможны повторяющиеся значения
-        "ACL_action":
-            [
+        "ACL_action": [
             "permit",
             "deny"
             ]
@@ -112,19 +100,16 @@
             "none",
             "any"
             },
-        "ACL_targets":
-            [
+        "ACL_targets": [
                 {
-                "ACL_target_source":
-                    [
+                "ACL_target_source": [
                         {
                         "Objects",
                         "Object_groups"
                         },
                         "host",
                     ],
-                "ACL_target_destination":
-                    [
+                "ACL_target_destination": [
                         {
                         "Object_groups",
                         "Objects"
